@@ -26,7 +26,8 @@ use crate::{
     },
     view::Resolver,
 };
-use std::{fmt, ops::Range};
+use alloc::{string::String, vec::Vec};
+use core::{fmt, ops::Range};
 
 /// How a header value is parsed.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -286,7 +287,7 @@ impl<'a> FieldCtx<'a> {
     }
 
     pub(crate) fn take_text_scratch(&mut self) -> String {
-        let mut text = std::mem::take(&mut self.data.scratch.text);
+        let mut text = core::mem::take(&mut self.data.scratch.text);
         text.clear();
         text
     }
@@ -296,7 +297,7 @@ impl<'a> FieldCtx<'a> {
     }
 
     pub(crate) fn take_bytes_scratch(&mut self) -> Vec<u8> {
-        let mut bytes = std::mem::take(&mut self.data.scratch.bytes);
+        let mut bytes = core::mem::take(&mut self.data.scratch.bytes);
         bytes.clear();
         bytes
     }

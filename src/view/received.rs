@@ -9,7 +9,7 @@ use crate::{
     DateTime,
     store::{HostEntry, ReceivedEntry},
 };
-use std::{fmt, net::IpAddr};
+use core::{fmt, net::IpAddr};
 
 /// A parsed Received trace field (RFC 5321 section 4.4). Every clause is
 /// optional; values compare by content.

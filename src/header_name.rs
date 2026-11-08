@@ -4,8 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0 OR MIT
  */
 
-use std::{
+use alloc::{
     borrow::Cow,
+    string::{String, ToString},
+};
+use core::{
     cmp::Ordering,
     fmt,
     hash::{Hash, Hasher},

@@ -6,7 +6,7 @@
 
 use super::FieldCtx;
 use crate::{DateTime, store::Value};
-use std::{ops::Range, slice::Iter};
+use core::{ops::Range, slice::Iter};
 
 const SLOTS: usize = 7;
 const MONTH_SLOT: usize = 1;

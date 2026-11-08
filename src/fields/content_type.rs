@@ -10,8 +10,9 @@ use crate::{
     scan::{ByteSet, Kernel},
     store::{Str, Value},
 };
+use alloc::{string::String, vec::Vec};
+use core::ops::Range;
 use encodify::{Error, hex, rfc2047::EncodedWord};
-use std::ops::Range;
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 enum State {
@@ -688,9 +689,9 @@ impl Parser {
                 ctx.push_param(attr_name, value);
             }
         } else {
-            let encoded = std::mem::take(&mut self.is_encoded_attribute);
+            let encoded = core::mem::take(&mut self.is_encoded_attribute);
             let charset = self.attr_charset.take().filter(|_| encoded);
-            let position = std::mem::take(&mut self.attr_position);
+            let position = core::mem::take(&mut self.attr_position);
             self.is_continuation = false;
             if self.take_budget() {
                 let (class, index) = if position > 0 {
@@ -741,7 +742,7 @@ impl Parser {
         let Some((start, end)) = self.token else {
             return false;
         };
-        self.attr_position = std::str::from_utf8(ctx.bytes(start..end))
+        self.attr_position = core::str::from_utf8(ctx.bytes(start..end))
             .ok()
             .and_then(|text| text.parse().ok())
             .unwrap_or(0);
@@ -790,7 +791,7 @@ impl FieldCtx<'_> {
     }
 
     fn assemble_params(&mut self, params: u32, mark: usize) {
-        let mut entries = std::mem::take(&mut self.data.scratch.continuations);
+        let mut entries = core::mem::take(&mut self.data.scratch.continuations);
         entries.extend(
             self.params_since(params)
                 .iter()

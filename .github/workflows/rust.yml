@@ -22,3 +22,18 @@ jobs:
       run: cargo test --verbose
     - name: Run tests with all features
       run: cargo test --all-features --verbose
+
+  no_std:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install a target without std
+      run: rustup target add thumbv7em-none-eabihf
+    - name: Build without std
+      run: cargo build --verbose --no-default-features --target thumbv7em-none-eabihf
+    - name: Build without std, all features
+      run: cargo build --verbose --no-default-features --features full_encoding,serde --target thumbv7em-none-eabihf
+    - name: Run tests without the std feature
+      run: cargo test --verbose --no-default-features --features full_encoding,serde --tests

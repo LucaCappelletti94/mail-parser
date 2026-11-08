@@ -10,11 +10,12 @@ use super::{
     Received, Source, TextList,
 };
 use crate::Encoding;
+use alloc::vec::Vec;
+use core::cell::Cell;
 use serde::{
     Serialize, Serializer,
     ser::{SerializeMap, SerializeStruct},
 };
-use std::cell::Cell;
 
 struct Seq<I>(Cell<Option<I>>);
 

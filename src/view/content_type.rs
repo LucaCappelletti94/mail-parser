@@ -6,7 +6,7 @@
 
 use super::Resolver;
 use crate::store::{ContentTypeEntry, MessageData, ParamEntry};
-use std::fmt;
+use core::fmt;
 
 struct Attributes<'m>(ContentType<'m>);
 

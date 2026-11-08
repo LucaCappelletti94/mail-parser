@@ -6,9 +6,10 @@
 
 use super::{FieldCtx, push_utf8_lossy};
 use crate::{decoders::charsets, store::Value};
+use alloc::{string::String, vec::Vec};
+use core::{iter::once, ops::Range};
 use encodify::rfc2047::EncodedWord;
 use memchr::{memchr, memchr_iter, memchr3, memmem};
-use std::{iter::once, ops::Range};
 
 impl FieldCtx<'_> {
     pub(crate) fn parse_comma_list(&mut self, value: Range<usize>) -> Value {

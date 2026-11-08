@@ -6,9 +6,9 @@
 
 use super::{base64_feed, charsets::Charset};
 use crate::Encoding;
+use alloc::{borrow::Cow, vec::Vec};
 use encodify::{base64, qp};
 use memchr::memrchr;
-use std::borrow::Cow;
 
 const MAX_BYTES_PER_CHAR: usize = 4;
 const RAW_BYTES_PER_TEXT_BYTE: usize = 2;

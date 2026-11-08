@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0 OR MIT
  */
 
+use alloc::string::String;
 #[cfg(feature = "full_encoding")]
 use encoding_rs::{Encoding, UTF_16BE, UTF_16LE};
 
@@ -14,7 +15,7 @@ pub(super) enum Endian {
 }
 
 const UNIT: usize = 2;
-const LEAD_SURROGATES: std::ops::RangeInclusive<u16> = 0xd800..=0xdbff;
+const LEAD_SURROGATES: core::ops::RangeInclusive<u16> = 0xd800..=0xdbff;
 
 pub(super) fn complete_prefix_bom(bytes: &[u8]) -> &[u8] {
     match bytes {
@@ -82,7 +83,7 @@ impl Endian {
 
     #[cfg(not(feature = "full_encoding"))]
     pub(super) fn decode_checked(self, bytes: &[u8]) -> (String, bool) {
-        use std::char::{REPLACEMENT_CHARACTER, decode_utf16};
+        use core::char::{REPLACEMENT_CHARACTER, decode_utf16};
 
         let (units, odd) = bytes.as_chunks::<UNIT>();
         let mut malformed = !odd.is_empty();
@@ -128,7 +129,7 @@ impl Endian {
 
     #[cfg(not(feature = "full_encoding"))]
     pub(super) fn decode_append(self, bytes: &[u8], out: &mut String) {
-        use std::char::{REPLACEMENT_CHARACTER, decode_utf16};
+        use core::char::{REPLACEMENT_CHARACTER, decode_utf16};
 
         let (units, odd) = bytes.as_chunks::<UNIT>();
         out.reserve(units.len());

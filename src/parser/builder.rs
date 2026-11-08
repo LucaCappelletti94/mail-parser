@@ -17,7 +17,8 @@ use crate::{
         SourceBuffer, Span, Str, flag, role,
     },
 };
-use std::ops::Range;
+use alloc::vec::Vec;
+use core::ops::Range;
 
 #[derive(Debug, Clone, Copy)]
 pub(crate) struct Frame {
@@ -239,8 +240,8 @@ impl<'p, 'd> Builder<'p, 'd> {
         data: &'d mut MessageData,
         headers_only: bool,
     ) -> Self {
-        let frames = Frames::new(std::mem::take(&mut data.scratch.frames));
-        let mut pending = std::mem::take(&mut data.scratch.pending);
+        let frames = Frames::new(core::mem::take(&mut data.scratch.frames));
+        let mut pending = core::mem::take(&mut data.scratch.pending);
         pending.clear();
         let (max_depth, max_parts, max_encoded_nesting) = conf.limits();
         Builder {
@@ -266,7 +267,7 @@ impl<'p, 'd> Builder<'p, 'd> {
 
     pub(super) fn run(mut self, raw: &[u8]) -> bool {
         self.reserve(raw.len());
-        let mut sources = std::mem::take(&mut self.data.sources);
+        let mut sources = core::mem::take(&mut self.data.sources);
         self.open_message(NONE, 0, None);
         let mut next = Next::Part(0);
         while !self.stopped {

@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0 OR MIT
  */
 
-use std::{borrow::Cow, char::REPLACEMENT_CHARACTER, ops::RangeInclusive};
+use alloc::{borrow::Cow, string::String};
+use core::{char::REPLACEMENT_CHARACTER, ops::RangeInclusive};
 
 use memchr::memchr;
 

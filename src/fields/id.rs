@@ -6,8 +6,8 @@
 
 use super::FieldCtx;
 use crate::store::Value;
+use core::ops::Range;
 use memchr::memchr2_iter;
-use std::ops::Range;
 
 impl FieldCtx<'_> {
     #[inline]

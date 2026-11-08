@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0 OR MIT
  */
 
-use std::{borrow::Cow, char::REPLACEMENT_CHARACTER};
+use alloc::{borrow::Cow, string::String, vec::Vec};
+use core::char::REPLACEMENT_CHARACTER;
 
 use crate::store::validated_string;
 use simdutf8::{basic, compat};
@@ -76,7 +77,7 @@ pub(super) fn complete_prefix(bytes: &[u8]) -> &[u8] {
         match tail.first() {
             Some(byte) if is_continuation(*byte) => continue,
             Some(_) => {
-                return match std::str::from_utf8(tail) {
+                return match core::str::from_utf8(tail) {
                     Err(error) if error.valid_up_to() == 0 && error.error_len().is_none() => {
                         complete
                     }

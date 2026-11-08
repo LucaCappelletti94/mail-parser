@@ -11,7 +11,8 @@ pub(crate) use str::{Str, validated_string};
 pub(crate) use table::{Blank, Table};
 
 use crate::{DateTime, Encoding, Greeting, Protocol, TlsVersion};
-use std::{fmt, net::IpAddr};
+use alloc::{boxed::Box, string::String, vec, vec::Vec};
+use core::{fmt, net::IpAddr};
 
 pub(crate) const NONE: u32 = u32::MAX;
 const FIRST_TEXT_ITEMS: usize = 16;
@@ -35,7 +36,7 @@ pub(crate) struct Span {
 }
 
 impl Span {
-    pub(crate) fn range(self) -> std::ops::Range<usize> {
+    pub(crate) fn range(self) -> core::ops::Range<usize> {
         let start = self.start as usize;
         start..start + self.len as usize
     }
@@ -136,7 +137,7 @@ impl Messages {
 
     #[cfg(test)]
     pub(crate) fn iter(&self) -> impl Iterator<Item = &MessageEntry> {
-        std::iter::once(&self.root)
+        core::iter::once(&self.root)
             .take(usize::from(self.has_root))
             .chain(&self.nested)
     }

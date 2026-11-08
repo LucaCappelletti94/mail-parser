@@ -20,8 +20,8 @@ use crate::{
     scan::Kernel,
     store::MessageData,
 };
+use alloc::{borrow::Cow, boxed::Box, vec::Vec};
 use builder::Builder;
-use std::borrow::Cow;
 
 const FIRST_VENDOR_ID: usize = FIRST_VENDOR as usize;
 const CONTENT_TYPE: u16 = HeaderId::ContentType as u16;
@@ -289,7 +289,7 @@ impl MessageParser {
     ) -> Option<Message<'x>> {
         let mut message = Message::new(
             Cow::Borrowed(raw.as_ref()),
-            std::mem::take(&mut buffers.data),
+            core::mem::take(&mut buffers.data),
         );
         message.split_mut().1.clear();
         self.fill(&mut message, false).then_some(message)

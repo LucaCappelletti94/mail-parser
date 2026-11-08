@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- `no_std` support with `alloc`. The new `std` feature, enabled by default, gates the `mailbox` module and run-time detection of AVX2 and SSSE3.
+
 ## [1.0.1] - 2026-11-02
 
 ### Fixed

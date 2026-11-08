@@ -16,8 +16,11 @@ mod prefix;
 pub mod preview;
 
 use crate::Encoding;
+use alloc::{
+    borrow::{Cow, ToOwned},
+    vec::Vec,
+};
 use encodify::{base64, qp};
-use std::borrow::Cow;
 
 pub(crate) use prefix::{Limit, TextPrefix, truncate};
 

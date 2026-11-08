@@ -68,8 +68,9 @@ impl Kernel {
     pub const MEMCHR: Kernel = Kernel(Backend::Memchr);
 
     /// The fastest back end supported by the running CPU: NEON on aarch64,
-    /// AVX2 or else SSSE3 when detected or else SSE2 on x86_64, `memchr`
-    /// elsewhere.
+    /// AVX2 or else SSSE3 when available or else SSE2 on x86_64, `memchr`
+    /// elsewhere. Without the `std` feature, AVX2 and SSSE3 are available
+    /// only when the build enables them as target features.
     pub fn best() -> Self {
         #[cfg(all(target_arch = "aarch64", target_feature = "neon"))]
         {
@@ -77,9 +78,9 @@ impl Kernel {
         }
         #[cfg(all(target_arch = "x86_64", target_feature = "sse2"))]
         {
-            if std::is_x86_feature_detected!("avx2") {
+            if x86_feature::avx2() {
                 Kernel(Backend::Avx2)
-            } else if std::is_x86_feature_detected!("ssse3") {
+            } else if x86_feature::ssse3() {
                 Kernel(Backend::Ssse3)
             } else {
                 Kernel(Backend::Sse2)
@@ -104,9 +105,9 @@ impl Kernel {
             #[cfg(all(target_arch = "x86_64", target_feature = "sse2"))]
             Some(Kernel(Backend::Sse2)),
             #[cfg(all(target_arch = "x86_64", target_feature = "sse2"))]
-            std::is_x86_feature_detected!("ssse3").then_some(Kernel(Backend::Ssse3)),
+            x86_feature::ssse3().then_some(Kernel(Backend::Ssse3)),
             #[cfg(all(target_arch = "x86_64", target_feature = "sse2"))]
-            std::is_x86_feature_detected!("avx2").then_some(Kernel(Backend::Avx2)),
+            x86_feature::avx2().then_some(Kernel(Backend::Avx2)),
         ]
         .into_iter()
         .flatten()
@@ -200,6 +201,37 @@ impl Kernel {
 impl Default for Kernel {
     fn default() -> Self {
         Kernel::best()
+    }
+}
+
+/// CPU features behind the x86_64 back ends: detected at run time with the
+/// `std` feature, otherwise only those the build enables.
+#[cfg(all(target_arch = "x86_64", target_feature = "sse2"))]
+pub(crate) mod x86_feature {
+    /// Whether the running CPU supports AVX2.
+    #[inline]
+    pub(crate) fn avx2() -> bool {
+        #[cfg(feature = "std")]
+        {
+            std::is_x86_feature_detected!("avx2")
+        }
+        #[cfg(not(feature = "std"))]
+        {
+            cfg!(target_feature = "avx2")
+        }
+    }
+
+    /// Whether the running CPU supports SSSE3.
+    #[inline]
+    pub(crate) fn ssse3() -> bool {
+        #[cfg(feature = "std")]
+        {
+            std::is_x86_feature_detected!("ssse3")
+        }
+        #[cfg(not(feature = "std"))]
+        {
+            cfg!(target_feature = "ssse3")
+        }
     }
 }
 

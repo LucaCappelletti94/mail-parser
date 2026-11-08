@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0 OR MIT
  */
 
-use std::borrow::Cow;
+use alloc::{borrow::Cow, string::String};
 
 use simdutf8::basic::from_utf8;
 

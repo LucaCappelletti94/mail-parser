@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0 OR MIT
  */
 
-use std::{borrow::Cow, ops::Range};
+use alloc::{borrow::Cow, string::String};
+use core::ops::Range;
 
 use memchr::{memchr, memchr_iter, memchr2_iter};
 

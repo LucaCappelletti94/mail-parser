@@ -9,9 +9,10 @@ use crate::{
     decoders::charsets,
     store::{Str, Value},
 };
+use alloc::string::String;
+use core::ops::Range;
 use encodify::rfc2047::decode_text_append_with;
 use memchr::{memchr2, memchr3_iter};
-use std::ops::Range;
 
 impl FieldCtx<'_> {
     #[inline]

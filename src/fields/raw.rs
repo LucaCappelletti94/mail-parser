@@ -6,7 +6,7 @@
 
 use super::{FieldCtx, trim_fws};
 use crate::store::{Str, Value};
-use std::ops::Range;
+use core::ops::Range;
 
 impl FieldCtx<'_> {
     pub(crate) fn parse_raw(&mut self, value: Range<usize>) -> Value {

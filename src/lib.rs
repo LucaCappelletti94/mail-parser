@@ -37,7 +37,8 @@
 //!   and [`Header::raw_value`] as written, [`Header::parse_as`] to parse a
 //!   field in another form, and [`HeaderForm::parse`] for values on their
 //!   own.
-//! - Mailboxes: [`mailbox::mbox`] and [`mailbox::maildir`].
+//! - Mailboxes: [`mailbox::mbox`] and [`mailbox::maildir`], with the `std`
+//!   feature.
 //! - Utilities: [`DateTime`], [`thread_name`], [`html_to_text`],
 //!   [`text_to_html`], [`preview_text`], [`Charset`] and the other
 //!   [`decoders`].
@@ -46,13 +47,19 @@
 //! by [`MessagePart::flags`], malformed encodings by the checked decoding
 //! methods. The `full_encoding` feature adds the multi-byte charsets
 //! (through `encoding_rs`), and the `serde` feature serializes messages.
+//! Without the default `std` feature the crate is `no_std` and needs only
+//! `alloc`.
 
+#![cfg_attr(not(any(feature = "std", test)), no_std)]
 #![warn(missing_docs)]
+
+extern crate alloc;
 
 mod datetime;
 pub mod decoders;
 mod fields;
 mod header_name;
+#[cfg(feature = "std")]
 pub mod mailbox;
 mod parser;
 #[doc(hidden)]

@@ -5,7 +5,8 @@
  */
 
 use crate::fields::{date, first_field};
-use std::{cmp::Ordering, fmt};
+use alloc::{format, string::String};
+use core::{cmp::Ordering, fmt};
 
 /// Three-letter day names, Sunday first, indexed by
 /// [`DateTime::day_of_week`].
@@ -217,7 +218,8 @@ impl DateTime {
 
     /// Day of the week, 0 (Sunday) to 6 (Saturday).
     pub fn day_of_week(&self) -> u8 {
-        (((self.to_timestamp_local() as f64 / 86400.0).floor() as i64 + 4).rem_euclid(7)) as u8
+        // rem_euclid(7) lies in 0..7.
+        (self.to_timestamp_local().div_euclid(86400) + 4).rem_euclid(7) as u8
     }
 
     /// Julian day number.
@@ -307,6 +309,20 @@ mod tests {
             "2021-11-20T23:22:01+01:00"
         );
         assert_eq!(date.julian_day(), 2459539);
+    }
+
+    #[test]
+    fn day_of_week_before_and_after_the_epoch() {
+        for (input, day) in [
+            ("1900-01-01T00:00:00Z", 1),
+            ("1969-12-31T00:00:00Z", 3),
+            ("1969-12-31T23:59:59Z", 3),
+            ("1970-01-01T00:00:00Z", 4),
+            ("2021-11-20T23:59:59Z", 6),
+        ] {
+            let date = DateTime::parse_rfc3339(input).expect("valid");
+            assert_eq!(date.day_of_week(), day, "{input}");
+        }
     }
 
     #[test]

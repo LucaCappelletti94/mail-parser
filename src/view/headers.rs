@@ -11,7 +11,8 @@ use crate::{
     store::{HeaderEntry, MessageData, NONE, OTHER_NAME, Str, Value},
     thread_name,
 };
-use std::{borrow::Cow, fmt, iter::FusedIterator, slice};
+use alloc::borrow::Cow;
+use core::{fmt, iter::FusedIterator, slice};
 
 /// The header fields of one part, in the order they were written.
 ///

@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0 OR MIT
  */
 
-use std::ops::Range;
+use alloc::{string::String, vec::Vec};
+use core::ops::Range;
 
 const POOL_BIT: u32 = 1 << 31;
 const MAX_LEN: usize = (POOL_BIT - 1) as usize;
@@ -150,7 +151,7 @@ fn source_str(bytes: &[u8]) -> &str {
     // `MessageData::clear` drops every span before the store is reused, and
     // a nested source is popped only when its message has no part, so no
     // span borrowed from it survives.
-    unsafe { std::str::from_utf8_unchecked(bytes) }
+    unsafe { core::str::from_utf8_unchecked(bytes) }
 }
 
 #[cfg(mail_parser_checked_str)]

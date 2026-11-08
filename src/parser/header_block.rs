@@ -12,8 +12,8 @@ use crate::{
     scan::swar::{self, WORD},
     store::{HeaderEntry, NONE, OTHER_NAME, Str, Value},
 };
+use core::ops::Range;
 use memchr::memchr2;
-use std::ops::Range;
 
 const KEY_LEN: usize = 64;
 const FIRST_NON_BLANK: u8 = 0x21;

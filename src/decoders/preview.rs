@@ -6,7 +6,7 @@
 
 //! Previews and truncation of text and HTML bodies.
 
-use std::borrow::Cow;
+use alloc::{borrow::Cow, string::String};
 
 use memchr::memchr;
 

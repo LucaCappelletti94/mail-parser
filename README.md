@@ -380,10 +380,11 @@ mail-parser does not decode a body until it is read, which is why `headers` and 
 
 | Feature | Effect |
 |---|---|
+| `std` | Enabled by default. Adds the `mailbox` readers (mbox and maildir) and run-time detection of AVX2 and SSSE3. Without it the crate is `no_std` and needs only `alloc`, and the x86-64 kernels use AVX2 or SSSE3 only when the build enables them as target features. |
 | `full_encoding` | Decodes the multi-byte character sets through `encoding_rs`: Shift_JIS, EUC-JP, ISO-2022-JP, Big5, GBK, GB18030, EUC-KR, windows-874, IBM866, x-mac-cyrillic and x-user-defined. Without it, text in these character sets is decoded as UTF-8 and reported as an unknown charset by `text_checked()`. |
 | `serde` | `Serialize` for `Message` and the views; `Serialize` and `Deserialize` for `DateTime`, `HeaderName` and the Received enums. |
 
-No feature is enabled by default. The minimum supported Rust version is 1.98.
+Only `std` is enabled by default. The minimum supported Rust version is 1.98.
 
 ## Testing, Fuzzing & Benchmarking
 

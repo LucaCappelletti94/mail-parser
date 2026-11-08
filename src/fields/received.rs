@@ -9,7 +9,7 @@ use crate::{
     DateTime, Greeting, Protocol, TlsVersion,
     store::{HostEntry, ReceivedEntry, Str, Value},
 };
-use std::{
+use core::{
     net::{IpAddr, Ipv4Addr, Ipv6Addr},
     ops::Range,
 };
@@ -481,7 +481,7 @@ impl Token {
             if !shaped {
                 return None;
             }
-            std::str::from_utf8(text)
+            core::str::from_utf8(text)
                 .ok()?
                 .parse::<Ipv6Addr>()
                 .ok()

@@ -29,7 +29,11 @@ mod utf16;
 mod utf7;
 mod utf8;
 
-use std::borrow::Cow;
+use alloc::{
+    borrow::{Cow, ToOwned},
+    string::String,
+    vec::Vec,
+};
 
 use multi_byte::MultiByte;
 use single_byte::Table;

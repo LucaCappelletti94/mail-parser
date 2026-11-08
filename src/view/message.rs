@@ -14,8 +14,9 @@ use crate::{
     store::{MessageData, MessageEntry, MessageId, NONE, PartId, Span},
     text_to_html,
 };
+use alloc::borrow::Cow;
+use core::fmt;
 use memchr::{memchr, memchr_iter};
-use std::{borrow::Cow, fmt};
 
 const PREVIEW_SLACK: usize = 16;
 const PREVIEW_CR_ALLOWANCE: usize = 16;

@@ -10,7 +10,8 @@ mod entities;
 mod meta;
 mod text;
 
-use std::char::REPLACEMENT_CHARACTER;
+use alloc::string::String;
+use core::char::REPLACEMENT_CHARACTER;
 
 use memchr::{memchr_iter, memchr2, memchr3};
 

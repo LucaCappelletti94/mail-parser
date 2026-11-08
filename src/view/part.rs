@@ -10,7 +10,8 @@ use crate::{
     decoders::{self, html::strip_charset_meta},
     store::{KindTag, MessageId, NONE, PartEntry, PartId, flag, role},
 };
-use std::{borrow::Cow, fmt};
+use alloc::{borrow::Cow, string::String, vec::Vec};
+use core::fmt;
 
 const WHOLE_TEXT_RAW_PER_BYTE: usize = 4;
 const DENSE_WHOLE_TEXT_RAW_PER_BYTE: usize = 10;
@@ -121,7 +122,7 @@ macro_rules! flag_set {
             }
         }
 
-        impl std::ops::BitOr for $set {
+        impl core::ops::BitOr for $set {
             type Output = $set;
 
             fn bitor(self, other: $set) -> $set {
@@ -129,7 +130,7 @@ macro_rules! flag_set {
             }
         }
 
-        impl std::ops::BitOrAssign for $set {
+        impl core::ops::BitOrAssign for $set {
             fn bitor_assign(&mut self, other: $set) {
                 self.0 |= other.0;
             }

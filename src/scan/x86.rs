@@ -223,8 +223,7 @@ pub(crate) fn avx2_dash_line(hay: &[u8], from: usize) -> Option<usize> {
     // `Kernel` dispatch in `scan/mod.rs` on `Backend::Avx2`: `x86` is a
     // private module of `scan`, `Backend` and the field of `Kernel` are
     // private to `scan`, and `Kernel::best` and `Kernel::available` build
-    // `Backend::Avx2` only after `is_x86_feature_detected!("avx2")` returned
-    // true.
+    // `Backend::Avx2` only after `x86_feature::avx2()` returned true.
     unsafe { avx2_dash_line_impl(hay.get(from..)?) }.map(|pos| pos + from)
 }
 
@@ -234,8 +233,7 @@ pub(crate) fn avx2_field_end(hay: &[u8], from: usize) -> Option<usize> {
     // `Kernel` dispatch in `scan/mod.rs` on `Backend::Avx2`: `x86` is a
     // private module of `scan`, `Backend` and the field of `Kernel` are
     // private to `scan`, and `Kernel::best` and `Kernel::available` build
-    // `Backend::Avx2` only after `is_x86_feature_detected!("avx2")` returned
-    // true.
+    // `Backend::Avx2` only after `x86_feature::avx2()` returned true.
     unsafe { avx2_field_end_impl(hay.get(from..)?) }.map(|pos| pos + from)
 }
 
@@ -290,7 +288,7 @@ impl ByteSet {
         // `pub(super)` in `x86`, a private module of `scan`, `Backend` and the
         // field of `Kernel` are private to `scan`, and `Kernel::best` and
         // `Kernel::available` build that back end only after
-        // `is_x86_feature_detected!("ssse3")` returned true.
+        // `x86_feature::ssse3()` returned true.
         unsafe { self.ssse3_first_in_impl(hay, from, end) }
     }
 
@@ -323,7 +321,7 @@ impl ByteSet {
         // `pub(super)` in `x86`, a private module of `scan`, `Backend` and the
         // field of `Kernel` are private to `scan`, and `Kernel::best` and
         // `Kernel::available` build that back end only after
-        // `is_x86_feature_detected!("avx2")` returned true.
+        // `x86_feature::avx2()` returned true.
         unsafe { self.avx2_first_in_impl(hay, from, end) }
     }
 
@@ -382,7 +380,7 @@ impl ByteSet {
         // `pub(super)` in `x86`, a private module of `scan`, `Backend` and the
         // field of `Kernel` are private to `scan`, and `Kernel::best` and
         // `Kernel::available` build that back end only after
-        // `is_x86_feature_detected!("ssse3")` returned true.
+        // `x86_feature::ssse3()` returned true.
         unsafe { self.ssse3_stop_in_impl(hay, from, end) }
     }
 
@@ -417,7 +415,7 @@ impl ByteSet {
         // `pub(super)` in `x86`, a private module of `scan`, `Backend` and the
         // field of `Kernel` are private to `scan`, and `Kernel::best` and
         // `Kernel::available` build that back end only after
-        // `is_x86_feature_detected!("avx2")` returned true.
+        // `x86_feature::avx2()` returned true.
         unsafe { self.avx2_stop_in_impl(hay, from, end) }
     }
 }

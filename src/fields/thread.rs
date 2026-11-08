@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0 OR MIT
  */
 
-use std::str;
+use core::str;
 
 const MAX_PREFIX_LEN: usize = 40;
 const MAX_GENERIC_PREFIX_CHARS: usize = 4;

@@ -21,7 +21,7 @@ pub use part::{DecodeProblems, MessagePart, PartFlags, PartKind, PartRole};
 pub use received::{Greeting, Host, Protocol, Received, TlsVersion};
 
 use crate::store::{Blank, MessageData, MessageEntry, MessageId, PartEntry, PartId, Span, Str};
-use std::ops::Range;
+use core::ops::Range;
 
 #[derive(Debug, Clone, Copy)]
 pub(crate) struct Resolver<'m> {

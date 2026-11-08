@@ -10,8 +10,9 @@ use crate::{
     scan::{ByteSet, Kernel},
     store::{Str, Value},
 };
+use alloc::{string::String, vec::Vec};
+use core::{mem, ops::Range};
 use encodify::rfc2047::EncodedWord;
-use std::{mem, ops::Range};
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 #[repr(u8)]

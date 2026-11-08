@@ -6,7 +6,7 @@
 
 use super::Resolver;
 use crate::store::AddressEntry;
-use std::fmt;
+use core::fmt;
 
 /// An address list: mailboxes and groups in document order (issue #98).
 /// Lists compare by content.
@@ -112,7 +112,7 @@ impl<'m> AddressList<'m> {
     pub fn iter(&self) -> impl Iterator<Item = Address<'m>> + use<'m> {
         let resolver = self.resolver;
         let mut rest = self.items;
-        std::iter::from_fn(move || {
+        core::iter::from_fn(move || {
             let (first, tail) = rest.split_first()?;
             if first.is_group() {
                 let (members, tail) = tail.split_at(first.members().min(tail.len()));
@@ -155,7 +155,7 @@ impl<'m> AddressList<'m> {
     pub fn groups(&self) -> impl Iterator<Item = (Option<&'m str>, AddressRun<'m>)> + use<'m> {
         let resolver = self.resolver;
         let mut rest = self.items;
-        std::iter::from_fn(move || {
+        core::iter::from_fn(move || {
             let (first, tail) = rest.split_first()?;
             let (name, run, tail) = if first.is_group() {
                 let (members, tail) = tail.split_at(first.members().min(tail.len()));

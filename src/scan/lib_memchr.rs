@@ -5,13 +5,22 @@
  */
 
 use super::{after, is_field_end};
-use memchr::{memchr_iter, memmem::Finder};
-use std::sync::LazyLock;
+use memchr::memchr_iter;
 
-static DASH_LINE: LazyLock<Finder<'static>> = LazyLock::new(|| Finder::new(b"\n--"));
+const DASH_LINE: &[u8] = b"\n--";
 
+#[cfg(feature = "std")]
 pub(crate) fn dash_line(hay: &[u8], from: usize) -> Option<usize> {
-    DASH_LINE.find(hay.get(from..)?).map(|pos| pos + from)
+    use memchr::memmem::Finder;
+    use std::sync::LazyLock;
+
+    static FINDER: LazyLock<Finder<'static>> = LazyLock::new(|| Finder::new(DASH_LINE));
+    FINDER.find(hay.get(from..)?).map(|pos| pos + from)
+}
+
+#[cfg(not(feature = "std"))]
+pub(crate) fn dash_line(hay: &[u8], from: usize) -> Option<usize> {
+    memchr::memmem::find(hay.get(from..)?, DASH_LINE).map(|pos| pos + from)
 }
 
 pub(crate) fn field_end(hay: &[u8], from: usize) -> Option<usize> {
